@@ -9,3 +9,4 @@ urlpatterns = patterns('',
     url(r'^$', 'whatever.views.whatever'),
     url(r'^add/$', 'whatever.views.add'),
 )
+
