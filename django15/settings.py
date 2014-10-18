@@ -5,7 +5,7 @@ import os
 PROJECT_ROOT = os.path.realpath(os.path.dirname(__file__))
 SITE_ROOT = os.path.dirname(PROJECT_ROOT)
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -16,10 +16,8 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': { 
-        'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'django_deploy',                     
-        'USER': 'root',
-        'PASSWORD': '',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', 
+       
     }
 }
 
@@ -117,6 +115,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'whatever',
+	'storages',
+	'boto',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -147,3 +147,29 @@ LOGGING = {
         },
     }
 }
+
+# # Allow all host hosts/domain names for this site
+ALLOWED_HOSTS = ['*']
+
+# Parse database configuration from $DATABASE_URL
+import dj_database_url
+
+DATABASES = { 'default' : dj_database_url.config()}
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# try to load local_settings.py if it exists
+try:
+  from local_settings import *
+except Exception as e:
+  pass
+ 
+ #Storage on S3 settings are stored as os.environs to keep settings.py clean
+if not DEBUG:
+   AWS_STORAGE_BUCKET_NAME = os.environ['testbyeric']
+   AWS_ACCESS_KEY_ID = os.environ['AKIAIGOZ6EAD65JR7VOA']
+   AWS_SECRET_ACCESS_KEY = os.environ['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']
+   STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+   S3_URL = 'http://%s.s3.amazonaws.com/' % testbyeric
+   STATIC_URL = S3_URL

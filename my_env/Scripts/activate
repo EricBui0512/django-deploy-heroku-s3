@@ -39,7 +39,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="$(if [ "$OSTYPE" "==" "cygwin" ]; then cygpath -u 'c:\django_heroku_deploy\myenv'; else echo '/c/django_heroku_deploy/myenv'; fi;)"
+VIRTUAL_ENV="$(if [ "$OSTYPE" "==" "cygwin" ]; then cygpath -u 'c:\django_heroku_deploy\my_env'; else echo '/c/django_heroku_deploy/my_env'; fi;)"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
@@ -78,8 +78,3 @@ alias pydoc="python -m pydoc"
 if [ -n "$BASH" -o -n "$ZSH_VERSION" ] ; then
     hash -r 2>/dev/null
 fi
-
-# s3 deployment info
-export AWS_STORAGE_BUCKET_NAME=[testbyeric]
-export AWS_ACCESS_KEY=AKIAIGOZ6EAD65JR7VOA
-export AWS_SECRET_ACCESS_KEY=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
